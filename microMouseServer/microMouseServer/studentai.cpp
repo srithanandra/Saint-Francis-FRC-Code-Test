@@ -3,6 +3,16 @@
 
 void microMouseServer::studentAI()
 {
+  if (isWallLeft() && isWallForward()) {
+        foundFinish();
+    }
+    if (moveForward()==false) {
+        turnLeft();
+    }
+    else {
+        microMouseServer::studentAI();
+    }
+    
 /*
  * The following are the eight functions that you can call. Feel free to create your own fuctions as well.
  * Remember that any solution that calls moveForward more than once per call of studentAI() will have points deducted.
