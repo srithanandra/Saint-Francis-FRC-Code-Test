@@ -1,32 +1,47 @@
 
 #include "micromouseserver.h"
 
+int lTurns = 0;
+int rTurns = 0; //in a 2x2 square, 3 turns are made in the same direction
+
 void microMouseServer::studentAI()
 {
-  if ((isWallLeft()==true)&&(isWallRight()==true)&&(isWallForward()==true)) {
+    if ((lTurns==3)||(rTurns==3)) {
+        foundFinish();
+        lTurns = 0; //reseting variables after end is found
+        rTurns = 0;
+    }
+    else if ((isWallLeft()==true)&&(isWallRight()==true)&&(isWallForward()==true)) {
         turnLeft(); //making a 180 degree turn
         turnLeft();
         moveForward();
-  }
-  else if ((isWallRight()==true)&&(isWallForward()==true)) { //if this condition is met 3 times in a row, the 2x2 square is found
+        lTurns = 0; // reseting turn variables to zero because it wasn't 3 times in a row
+        rTurns = 0;
+    }
+    else if ((isWallRight()==true)&&(isWallForward()==true)) { //if this condition is met 3 times in a row, the 2x2 square is found
         turnLeft();
         moveForward();
-  }
-  else if ((isWallLeft()==true)&&(isWallForward()==true)) { //if this condition is met 3 times in a row, the 2x2 square is found
+        lTurns++;
+    }
+    else if ((isWallLeft()==true)&&(isWallForward()==true)) { //if this condition is met 3 times in a row, the 2x2 square is found
         turnRight();
         moveForward();
         rTurns++;
-  }
-  else if (isWallRight()==true) {
+    }
+    else if (isWallRight()==true) {
         moveForward();
-  }
-  else if (isWallRight()==false) {
+        lTurns = 0; // reseting turn variables to zero because it wasn't 3 times in a row
+        rTurns = 0;
+    }
+    else if (isWallRight()==false) {
         turnRight();
         moveForward();
-  }
-  else {
+        lTurns = 0; // reseting turn variables to zero because it wasn't 3 times in a row
+        rTurns = 0;
+    }
+    else {
         microMouseServer::studentAI(); //recursing to find the end of the maze
-  } 
+    }
 /*
  * The following are the eight functions that you can call. Feel free to create your own fuctions as well.
  * Remember that any solution that calls moveForward more than once per call of studentAI() will have points deducted.
