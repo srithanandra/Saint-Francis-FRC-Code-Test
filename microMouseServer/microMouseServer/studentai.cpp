@@ -2,7 +2,6 @@
 #include "micromouseserver.h"
 #include <cstdlib>
 
-int count = 0; //count the amount of right turns in order to stay out of loop
 int lTurns = 0;
 int rTurns = 0; //in a 2x2 square, 3 turns are made in the same direction
 
@@ -33,24 +32,26 @@ void microMouseServer::studentAI()
         lTurns=0;
     }
     else if ((isWallRight()==true)&&(isWallLeft()==false)) {
-        if (count>20) { //keeping the mouse out of a loop
+        int random = rand() % 2;
+        lTurns = 0; // reseting turn variables to zero because it wasn't 3 times in a row
+        rTurns = 0;
+        if (random==1) {
             turnLeft();
             moveForward();
-            count=0;
         }
         else {
-            count++;
             moveForward();
         }
     }
     else if ((isWallRight()==false)&&(isWallLeft()==false)) {
-        if (count>20) { //keeping the mouse out of a loop
+        int random = rand() % 2;
+        lTurns = 0; // reseting turn variables to zero because it wasn't 3 times in a row
+        rTurns = 0;
+        if (random==1) {
             turnLeft();
             moveForward();
-            count=0;
         }
         else {
-            count++;
             turnRight();
             moveForward();
         }
